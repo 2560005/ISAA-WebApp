@@ -1,0 +1,1702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISAA (Indian Scale for Assessment of Autism) Child Assessment</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #819A91 0%, #A7C1A8 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100vw;
+            height: 100vh;
+            background: #EEEFE0;
+            overflow: hidden;
+        }
+
+        .header {
+            text-align: center;
+            padding: 25px 30px;
+            background: linear-gradient(135deg, #819A91 0%, #A7C1A8 100%);
+            color: white;
+            position: relative;
+        }
+
+        .header h1 {
+            font-size: 2.2em;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .header p {
+            font-size: 1em;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .content-wrapper {
+            display: flex;
+            height: calc(100vh - 110px);
+        }
+
+        .sidebar {
+            width: 280px;
+            background: #D1D8BE;
+            padding: 20px 15px;
+            border-right: 1px solid #c1c9ab;
+            overflow-y: auto;
+        }
+
+        .progress-container {
+            background: #EEEFE0;
+            height: 8px;
+            border-radius: 4px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            background: linear-gradient(90deg, #819A91, #A7C1A8);
+            height: 100%;
+            width: 0%;
+            transition: width 0.5s ease;
+            border-radius: 4px;
+        }
+
+        .progress-text {
+            text-align: center;
+            font-weight: 500;
+            color: #5a6d5f;
+            margin-bottom: 20px;
+        }
+
+        .domain-list {
+            list-style: none;
+            margin-top: 20px;
+        }
+
+        .domain-item {
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            color: #5a6d5f;
+            display: flex;
+            align-items: center;
+        }
+
+        .domain-item:hover {
+            background: rgba(129, 154, 145, 0.2);
+        }
+
+        .domain-item.active {
+            background: #819A91;
+            color: white;
+        }
+
+        .domain-icon {
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .privacy-notice {
+            background: #e8f5e8;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 5px solid #28a745;
+            margin-bottom: 20px;
+        }
+
+        .privacy-notice h3 {
+            color: #155724;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+
+        .form-section {
+            margin-bottom: 20px;
+            padding: 20px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            background: #f8f9fa;
+        }
+
+        .child-info {
+            background: linear-gradient(135deg, #D1D8BE 0%, #c1c9ab 100%);
+            color: #333;
+        }
+
+        .child-info input, .child-info select {
+            width: 100%;
+            padding: 10px;
+            margin: 6px 0;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 15px;
+        }
+
+        .domain {
+            background: white;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .domain-header {
+            background: linear-gradient(135deg, #819A91 0%, #A7C1A8 100%);
+            color: white;
+            padding: 15px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .domain-header:hover {
+            background: linear-gradient(135deg, #758e84 0%, #96af97 100%);
+        }
+
+        .domain-header h3 {
+            font-size: 1.2em;
+        }
+
+        .expand-icon {
+            font-size: 1.3em;
+            transition: transform 0.3s ease;
+        }
+
+        .domain-content {
+            padding: 15px;
+            display: none;
+        }
+
+        .domain-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-8px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .question {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 6px;
+            border-left: 4px solid #819A91;
+        }
+
+        .question h4 {
+            color: #2d3436;
+            margin-bottom: 8px;
+            font-size: 1em;
+        }
+
+        .question-description {
+            color: #636e72;
+            margin-bottom: 12px;
+            font-style: italic;
+            font-size: 0.9em;
+        }
+
+        .rating-options {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .rating-option {
+            flex: 1;
+            min-width: 130px;
+        }
+
+        .rating-option input[type="radio"] {
+            display: none;
+        }
+
+        .rating-option label {
+            display: block;
+            padding: 10px;
+            background: white;
+            border: 2px solid #dee2e6;
+            border-radius: 6px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.85em;
+        }
+
+        .rating-option input[type="radio"]:checked + label {
+            background: #819A91;
+            color: white;
+            border-color: #819A91;
+            transform: scale(1.02);
+        }
+
+        .rating-option label:hover {
+            border-color: #819A91;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(129, 154, 145, 0.2);
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 25px;
+            padding: 15px 0;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #819A91 0%, #A7C1A8 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(129, 154, 145, 0.3);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+            transform: translateY(-2px);
+        }
+
+        .results-section {
+            display: none;
+            padding: 25px;
+            background: linear-gradient(135deg, #819A91 0%, #A7C1A8 100%);
+            color: white;
+            border-radius: 12px;
+        }
+
+        .score-display {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin: 15px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .category {
+            font-size: 1.3em;
+            margin: 8px 0;
+            padding: 12px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 8px;
+        }
+
+        .recommendations {
+            text-align: left;
+            margin-top: 25px;
+            background: white;
+            color: #333;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .domain-scores {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+            margin: 15px 0;
+        }
+
+        .domain-score {
+            background: rgba(255,255,255,0.2);
+            padding: 12px;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .disclaimer {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 15px 0;
+            color: #856404;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .strength-area {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+
+        .concern-area {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+
+        .personalized-section {
+            background: #e3f2fd;
+            border: 1px solid #2196f3;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+        }
+
+        .medical-section {
+            background: #fff3e0;
+            border: 1px solid #ff9800;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+        }
+
+        @media (max-width: 900px) {
+            .content-wrapper {
+                flex-direction: column;
+                height: auto;
+            }
+            .sidebar {
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid #c1c9ab;
+            }
+            .rating-options {
+                flex-direction: column;
+            }
+            .rating-option {
+                min-width: auto;
+            }
+            .header h1 {
+                font-size: 1.8em;
+            }
+            .domain-scores {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .notification {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            background: linear-gradient(135deg, #819A91 0%, #A7C1A8 100%);
+            color: white;
+            padding: 12px 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            max-width: 280px;
+            z-index: 1000;
+            animation: slideIn 0.5s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .notification-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            margin-left: 8px;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .print-only {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>ISAA (Indian Scale for Assessment of Autism) Child Assessment</h1>
+            <p>A comprehensive, confidential tool for parents to assess their child's development</p>
+        </div>
+
+        <div class="content-wrapper">
+            <div class="sidebar">
+                <h3>Assessment Progress</h3>
+                <div class="progress-container">
+                    <div class="progress-bar" id="progressBar"></div>
+                </div>
+                <div class="progress-text" id="progressText">0/40 questions answered</div>
+
+                <h3>Assessment Domains</h3>
+                <ul class="domain-list" id="domainList">
+                    <!-- Domain list will be populated by JavaScript -->
+                </ul>
+            </div>
+
+            <div class="main-content">
+                <div class="privacy-notice">
+                    <h3>🔒 Your Privacy is Our Priority</h3>
+                    <p>This assessment is completely confidential and anonymous. No personal information is stored or shared. Answer honestly - this tool is designed to help you understand your child better and identify if professional consultation might be beneficial.</p>
+                </div>
+
+                <div id="assessment-form">
+                    <div class="form-section child-info">
+                        <h3>Child Information</h3>
+                        <input type="text" id="childName" placeholder="Child's Name (Optional)" />
+                        <input type="number" id="childAge" placeholder="Child's Age (in years)" min="1" max="18" required />
+                        <select id="childGender">
+                            <option value="">Select Gender</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <div id="questionnaire">
+                        <!-- Questions will be populated by JavaScript -->
+                    </div>
+
+                    <div class="navigation">
+                        <button class="btn btn-secondary" onclick="resetAssessment()">Reset Assessment</button>
+                        <button class="btn btn-primary" onclick="calculateResults()">Get Assessment Results</button>
+                    </div>
+                </div>
+
+                <div id="results" class="results-section">
+                    <!-- Results will be populated by JavaScript -->
+                </div>
+
+                <div class="disclaimer">
+                    <strong>Important Disclaimer:</strong> This assessment tool is for informational purposes only and should not replace professional medical diagnosis. If your results suggest concerns, please consult with qualified healthcare professionals, developmental pediatricians, or autism specialists for proper evaluation and guidance.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const domains = [
+            {
+                title: "Social Relationship and Reciprocity",
+                description: "How your child interacts and connects with others",
+                icon: "👥",
+                questions: [
+                    {
+                        title: "Poor eye contact",
+                        description: "Your child avoids looking people in the eye or has unusual eye contact patterns (staring too long, looking sideways, etc.)"
+                    },
+                    {
+                        title: "Lacks social smile",
+                        description: "Your child doesn't smile when meeting people or in response to social interactions"
+                    },
+                    {
+                        title: "Remains aloof",
+                        description: "Your child seems withdrawn, self-absorbed, and doesn't respond to people or environment appropriately"
+                    },
+                    {
+                        title: "Does not reach out to others",
+                        description: "Your child doesn't initiate social interactions or respond when others try to engage"
+                    },
+                    {
+                        title: "Unable to relate to people",
+                        description: "Your child has difficulty connecting with others and requires persistent effort to get their attention"
+                    },
+                    {
+                        title: "Unable to respond to social/environmental cues",
+                        description: "Your child doesn't behave appropriately in social situations (like visiting friends, being in public places)"
+                    },
+                    {
+                        title: "Engages in solitary and repetitive play",
+                        description: "Your child prefers to play alone and repeats the same activities rather than playing with others"
+                    },
+                    {
+                        title: "Unable to take turns in social interaction",
+                        description: "Your child has difficulty with turn-taking in games, conversations, or activities"
+                    },
+                    {
+                        title: "Does not maintain peer relationships",
+                        description: "Your child doesn't develop age-appropriate friendships or maintain relationships with peers"
+                    }
+                ]
+            },
+            {
+                title: "Emotional Responsiveness",
+                description: "How your child expresses and manages emotions",
+                icon: "💖",
+                questions: [
+                    {
+                        title: "Shows inappropriate emotional response",
+                        description: "Your child shows emotions that don't match the situation (laughing when scolded, excessive crying)"
+                    },
+                    {
+                        title: "Shows exaggerated emotions",
+                        description: "Your child shows extreme fear, anxiety, or other emotions that seem excessive or triggered without apparent reason"
+                    },
+                    {
+                        title: "Engages in self-stimulating emotions",
+                        description: "Your child talks to themselves, laughs, smiles, or shows emotions without any apparent reason"
+                    },
+                    {
+                        title: "Lacks fear of danger",
+                        description: "Your child doesn't show appropriate fear of hazards or dangerous situations"
+                    },
+                    {
+                        title: "Excited or agitated for no apparent reason",
+                        description: "Your child becomes overly excited, hyperactive, or agitated without clear cause"
+                    }
+                ]
+            },
+            {
+                title: "Speech-Language and Communication",
+                description: "How your child communicates and uses language",
+                icon: "💬",
+                questions: [
+                    {
+                        title: "Acquired speech and lost it",
+                        description: "Your child had developed speech but then lost this ability"
+                    },
+                    {
+                        title: "Difficulty using non-verbal communication",
+                        description: "Your child has trouble using gestures, pointing, or understanding non-verbal cues from others"
+                    },
+                    {
+                        title: "Stereotyped and repetitive language",
+                        description: "Your child repeats words, phrases, or sentences out of context multiple times"
+                    },
+                    {
+                        title: "Echolalic speech",
+                        description: "Your child repeats or echoes questions or statements instead of answering appropriately"
+                    },
+                    {
+                        title: "Produces unusual noises",
+                        description: "Your child makes squealing sounds, bizarre noises, or unintelligible speech-like sounds"
+                    },
+                    {
+                        title: "Unable to initiate or sustain conversation",
+                        description: "Your child cannot start conversations or maintain meaningful dialogue"
+                    },
+                    {
+                        title: "Uses jargon or meaningless words",
+                        description: "Your child uses strange words or sounds that have no apparent meaning"
+                    },
+                    {
+                        title: "Uses pronoun reversals",
+                        description: "Your child confuses pronouns like saying 'you' instead of 'I'"
+                    },
+                    {
+                        title: "Unable to grasp pragmatics of communication",
+                        description: "Your child doesn't understand the real meaning behind speech, humor, or sarcasm"
+                    }
+                ]
+            },
+            {
+                title: "Behaviour Patterns",
+                description: "Your child's behavioral patterns and responses",
+                icon: "🔍",
+                questions: [
+                    {
+                        title: "Stereotyped and repetitive motor movements",
+                        description: "Your child engages in hand flapping, body rocking, or repetitive use of objects for stimulation"
+                    },
+                    {
+                        title: "Shows attachment to inanimate objects",
+                        description: "Your child is strongly attached to specific objects (strings, rocks, toys) and shows distress when separated"
+                    },
+                    {
+                        title: "Shows hyperactivity/restlessness",
+                        description: "Your child is restless with boundless energy that interferes with learning and daily activities"
+                    },
+                    {
+                        title: "Exhibits aggressive behavior",
+                        description: "Your child shows unprovoked aggression like hitting, kicking, or pinching"
+                    },
+                    {
+                        title: "Throws temper tantrums",
+                        description: "Your child has intense outbursts with head banging, screaming, or yelling when frustrated"
+                    },
+                    {
+                        title: "Engages in self-injurious behavior",
+                        description: "Your child hurts themselves by biting, hitting, or other self-harmful actions"
+                    },
+                    {
+                        title: "Insists on sameness",
+                        description: "Your child resists changes in routine and insists things remain exactly the same"
+                    }
+                ]
+            },
+            {
+                title: "Sensory Aspects",
+                description: "How your child responds to sensory experiences",
+                icon: "👀",
+                questions: [
+                    {
+                        title: "Unusually sensitive to sensory stimuli",
+                        description: "Your child reacts strongly to sounds, lights, textures, or tastes by covering ears/eyes or refusing things"
+                    },
+                    {
+                        title: "Stares into space for long periods",
+                        description: "Your child stares at distant spots or spaces for extended periods, seeming unaware of surroundings"
+                    },
+                    {
+                        title: "Difficulty tracking objects",
+                        description: "Your child has trouble following moving objects or people with their eyes"
+                    },
+                    {
+                        title: "Has unusual vision",
+                        description: "Your child notices tiny details others miss, looks at things sideways, or brings objects very close to examine"
+                    },
+                    {
+                        title: "Insensitive to pain",
+                        description: "Your child doesn't react appropriately to pain or injury"
+                    },
+                    {
+                        title: "Responds to objects unusually",
+                        description: "Your child explores things by smelling, touching, or tasting rather than using them appropriately"
+                    }
+                ]
+            },
+            {
+                title: "Cognitive Component",
+                description: "Your child's attention, memory, and learning patterns",
+                icon: "🧠",
+                questions: [
+                    {
+                        title: "Inconsistent attention and concentration",
+                        description: "It's difficult to get your child's attention, and they don't concentrate on relevant aspects of tasks"
+                    },
+                    {
+                        title: "Shows delayed response time",
+                        description: "Your child doesn't respond to instructions promptly and needs repeated prompts"
+                    },
+                    {
+                        title: "Has unusual memory",
+                        description: "Your child remembers things from long ago in extraordinary detail that most people would forget"
+                    },
+                    {
+                        title: "Has savant ability",
+                        description: "Your child shows special talents in specific areas like reading, math, art, or music despite other challenges"
+                    }
+                ]
+            }
+        ];
+
+        const ratingScale = [
+            { value: 1, label: "Rarely", description: "Up to 20%" },
+            { value: 2, label: "Sometimes", description: "21-40%" },
+            { value: 3, label: "Frequently", description: "41-60%" },
+            { value: 4, label: "Mostly", description: "61-80%" },
+            { value: 5, label: "Always", description: "81-100%" }
+        ];
+
+        let responses = {};
+        let currentDomain = 0;
+
+        function initializeAssessment() {
+            // Create domain list in sidebar
+            const domainList = document.getElementById('domainList');
+            domainList.innerHTML = '';
+            
+            domains.forEach((domain, domainIndex) => {
+                const li = document.createElement('li');
+                li.className = 'domain-item';
+                li.id = `domain-item-${domainIndex}`;
+                li.innerHTML = `<span class="domain-icon">${domain.icon}</span> ${domain.title}`;
+                li.onclick = () => {
+                    toggleDomain(domainIndex);
+                    document.querySelectorAll('.domain-item').forEach(item => item.classList.remove('active'));
+                    li.classList.add('active');
+                };
+                domainList.appendChild(li);
+            });
+
+            // Create questionnaire
+            const questionnaire = document.getElementById('questionnaire');
+            questionnaire.innerHTML = '';
+            
+            domains.forEach((domain, domainIndex) => {
+                const domainDiv = document.createElement('div');
+                domainDiv.className = 'domain';
+                domainDiv.innerHTML = `
+                    <div class="domain-header" onclick="toggleDomain(${domainIndex})">
+                        <div>
+                            <h3>${domain.icon} ${domain.title}</h3>
+                            <p style="margin-top: 5px; opacity: 0.8; font-size: 0.9em;">${domain.description}</p>
+                        </div>
+                        <span class="expand-icon" id="icon-${domainIndex}">▼</span>
+                    </div>
+                    <div class="domain-content" id="content-${domainIndex}">
+                        ${domain.questions.map((question, questionIndex) => `
+                            <div class="question">
+                                <h4>${questionIndex + 1}. ${question.title}</h4>
+                                <div class="question-description">${question.description}</div>
+                                <div class="rating-options">
+                                    ${ratingScale.map(rating => `
+                                        <div class="rating-option">
+                                            <input type="radio" id="q${domainIndex}_${questionIndex}_${rating.value}" 
+                                                   name="q${domainIndex}_${questionIndex}" value="${rating.value}" 
+                                                   onchange="updateResponse(${domainIndex}, ${questionIndex}, ${rating.value})">
+                                            <label for="q${domainIndex}_${questionIndex}_${rating.value}">
+                                                <strong>${rating.label}</strong><br>
+                                                <small>${rating.description}</small>
+                                            </label>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+                questionnaire.appendChild(domainDiv);
+            });
+
+            // Open first domain by default
+            toggleDomain(0);
+            document.getElementById('domain-item-0').classList.add('active');
+            updateProgress();
+        }
+
+        function toggleDomain(domainIndex) {
+            const content = document.getElementById(`content-${domainIndex}`);
+            const icon = document.getElementById(`icon-${domainIndex}`);
+            
+            if (content.classList.contains('active')) {
+                content.classList.remove('active');
+                icon.style.transform = 'rotate(0deg)';
+            } else {
+                // Close all other domains
+                domains.forEach((_, index) => {
+                    const otherContent = document.getElementById(`content-${index}`);
+                    const otherIcon = document.getElementById(`icon-${index}`);
+                    if (otherContent.classList.contains('active')) {
+                        otherContent.classList.remove('active');
+                        otherIcon.style.transform = 'rotate(0deg)';
+                    }
+                });
+                
+                content.classList.add('active');
+                icon.style.transform = 'rotate(180deg)';
+                
+                // Scroll to the domain
+                content.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        function updateResponse(domainIndex, questionIndex, value) {
+            if (!responses[domainIndex]) responses[domainIndex] = {};
+            responses[domainIndex][questionIndex] = value;
+            updateProgress();
+        }
+
+        function updateProgress() {
+            const totalQuestions = domains.reduce((sum, domain) => sum + domain.questions.length, 0);
+            const answeredQuestions = Object.values(responses).reduce((sum, domain) => sum + Object.keys(domain).length, 0);
+            const progressPercentage = (answeredQuestions / totalQuestions) * 100;
+            
+            document.getElementById('progressBar').style.width = progressPercentage + '%';
+            document.getElementById('progressText').textContent = `${answeredQuestions}/${totalQuestions} questions answered`;
+
+            // Update domain items with completion status
+            domains.forEach((domain, domainIndex) => {
+                const domainItem = document.getElementById(`domain-item-${domainIndex}`);
+                if (responses[domainIndex]) {
+                    const domainAnswered = Object.keys(responses[domainIndex]).length;
+                    const domainTotal = domain.questions.length;
+                    if (domainAnswered === domainTotal) {
+                        domainItem.innerHTML = `<span class="domain-icon">${domain.icon}</span> ${domain.title} ✓`;
+                    } else if (domainAnswered > 0) {
+                        domainItem.innerHTML = `<span class="domain-icon">${domain.icon}</span> ${domain.title} (${domainAnswered}/${domainTotal})`;
+                    }
+                }
+            });
+        }
+
+        function analyzeChildProfile(domainScores, totalScore, childAge, childName) {
+            const strengths = [];
+            const concerns = [];
+            const specificRecommendations = [];
+            const medicalGuidance = [];
+            const educationalSupports = [];
+
+            // Analyze each domain
+            domainScores.forEach(domain => {
+                const intensity = parseFloat(domain.percentage);
+                
+                if (intensity <= 30) {
+                    strengths.push({
+                        area: domain.name,
+                        description: `${childName || 'Your child'} shows good development in ${domain.name.toLowerCase()}`,
+                        suggestions: getStrengthSuggestions(domain.name, childAge)
+                    });
+                } else if (intensity >= 60) {
+                    concerns.push({
+                        area: domain.name,
+                        description: `${childName || 'Your child'} shows significant challenges in ${domain.name.toLowerCase()}`,
+                        priority: intensity >= 80 ? 'high' : 'moderate',
+                        interventions: getConcernInterventions(domain.name, childAge, intensity)
+                    });
+                }
+            });
+
+            // Generate age-specific recommendations
+            const ageSpecificGuidance = getAgeSpecificGuidance(childAge, totalScore);
+            
+            // Generate medical recommendations
+            const medicalRecommendations = getMedicalRecommendations(totalScore, concerns, childAge);
+            
+            // Generate educational recommendations
+            const educationalRecommendations = getEducationalRecommendations(concerns, childAge);
+
+            return {
+                strengths,
+                concerns,
+                ageSpecificGuidance,
+                medicalRecommendations,
+                educationalRecommendations,
+                parentingStrategies: getParentingStrategies(concerns, strengths, childAge)
+            };
+        }
+
+        function getStrengthSuggestions(domainName, age) {
+            const suggestions = {
+                "Social Relationship and Reciprocity": {
+                    "3-6": ["Encourage playdates with peers", "Join parent-child activity groups", "Practice greeting and social routines"],
+                    "7-12": ["Support participation in team activities", "Encourage joining clubs or groups", "Practice conversation skills"],
+                    "13-18": ["Support social independence", "Encourage peer mentoring", "Practice workplace social skills"]
+                },
+                "Emotional Responsiveness": {
+                    "3-6": ["Read emotion books together", "Practice identifying feelings", "Create emotion charts"],
+                    "7-12": ["Teach coping strategies", "Practice emotional regulation", "Encourage emotional expression"],
+                    "13-18": ["Support emotional independence", "Practice stress management", "Encourage self-advocacy"]
+                },
+                "Speech-Language and Communication": {
+                    "3-6": ["Continue rich language exposure", "Read daily", "Encourage storytelling"],
+                    "7-12": ["Support academic language development", "Practice presentation skills", "Encourage creative writing"],
+                    "13-18": ["Support communication independence", "Practice job interview skills", "Encourage public speaking"]
+                },
+                "Behaviour Patterns": {
+                    "3-6": ["Maintain consistent routines", "Use positive reinforcement", "Provide clear expectations"],
+                    "7-12": ["Teach self-regulation skills", "Practice problem-solving", "Encourage responsibility"],
+                    "13-18": ["Support behavioral independence", "Practice self-monitoring", "Encourage leadership roles"]
+                },
+                "Sensory Aspects": {
+                    "3-6": ["Continue sensory play activities", "Explore different textures safely", "Support sensory preferences"],
+                    "7-12": ["Teach sensory self-advocacy", "Practice sensory breaks", "Support sensory tools use"],
+                    "13-18": ["Support sensory independence", "Practice workplace sensory management", "Encourage self-accommodation"]
+                },
+                "Cognitive Component": {
+                    "3-6": ["Continue cognitive stimulation", "Practice attention games", "Support learning interests"],
+                    "7-12": ["Support academic strengths", "Practice study skills", "Encourage special interests"],
+                    "13-18": ["Support cognitive independence", "Practice executive function skills", "Encourage career exploration"]
+                }
+            };
+
+            const ageGroup = age <= 6 ? "3-6" : age <= 12 ? "7-12" : "13-18";
+            return suggestions[domainName]?.[ageGroup] || ["Continue supporting this area of strength"];
+        }
+
+        function getConcernInterventions(domainName, age, intensity) {
+            const interventions = {
+                "Social Relationship and Reciprocity": {
+                    moderate: ["Social skills therapy", "Peer interaction programs", "Structured play activities"],
+                    high: ["Intensive social skills training", "Applied Behavior Analysis (ABA)", "Social stories and visual supports"]
+                },
+                "Emotional Responsiveness": {
+                    moderate: ["Emotional regulation therapy", "Counseling", "Mindfulness training"],
+                    high: ["Intensive behavioral intervention", "Psychiatric evaluation", "Crisis management planning"]
+                },
+                "Speech-Language and Communication": {
+                    moderate: ["Speech-language therapy", "Communication devices", "Social communication training"],
+                    high: ["Intensive speech therapy", "Alternative communication systems", "Augmentative communication devices"]
+                },
+                "Behaviour Patterns": {
+                    moderate: ["Behavioral therapy", "Structured routines", "Positive behavior support"],
+                    high: ["Intensive behavioral intervention", "Functional behavior assessment", "Crisis intervention planning"]
+                },
+                "Sensory Aspects": {
+                    moderate: ["Occupational therapy", "Sensory integration therapy", "Environmental modifications"],
+                    high: ["Intensive occupational therapy", "Sensory diet implementation", "Comprehensive sensory assessment"]
+                },
+                "Cognitive Component": {
+                    moderate: ["Cognitive training", "Executive function support", "Learning strategies"],
+                    high: ["Comprehensive neuropsychological evaluation", "Intensive cognitive intervention", "Special education services"]
+                }
+            };
+
+            const level = intensity >= 80 ? 'high' : 'moderate';
+            return interventions[domainName]?.[level] || ["Professional consultation recommended"];
+        }
+
+        function getAgeSpecificGuidance(age, totalScore) {
+            if (age <= 6) {
+                return {
+                    focus: "Early Intervention is Critical",
+                    priorities: [
+                        "Focus on building foundational skills",
+                        "Establish consistent routines and structure",
+                        "Work on basic communication and social skills",
+                        "Prepare for school transition if applicable"
+                    ],
+                    timeline: "Immediate intervention can have the most significant impact"
+                };
+            } else if (age <= 12) {
+                return {
+                    focus: "School-Age Support and Development",
+                    priorities: [
+                        "Coordinate with school for appropriate support",
+                        "Focus on academic accommodations",
+                        "Build independence and self-advocacy skills",
+                        "Support peer relationships and social skills"
+                    ],
+                    timeline: "Ongoing support throughout school years is essential"
+                };
+            } else {
+                return {
+                    focus: "Transition to Adulthood Preparation",
+                    priorities: [
+                        "Focus on life skills and independence",
+                        "Explore post-secondary education options",
+                        "Develop vocational skills and interests",
+                        "Plan for adult support services if needed"
+                    ],
+                    timeline: "Transition planning should begin now for successful adult outcomes"
+                };
+            }
+        }
+
+        function getMedicalRecommendations(totalScore, concerns, age) {
+            const recommendations = [];
+            
+            if (totalScore >= 70) {
+                recommendations.push({
+                    priority: "High",
+                    action: "Developmental Pediatrician Consultation",
+                    reason: "For comprehensive autism spectrum evaluation and diagnosis",
+                    timeline: "Within 2-4 weeks"
+                });
+
+                recommendations.push({
+                    priority: "High",
+                    action: "Psychological/Psychiatric Evaluation",
+                    reason: "To assess for co-occurring conditions and mental health needs",
+                    timeline: "Within 1-2 months"
+                });
+            }
+
+            // Specific medical recommendations based on concerns
+            concerns.forEach(concern => {
+                if (concern.area === "Speech-Language and Communication") {
+                    recommendations.push({
+                        priority: concern.priority === 'high' ? "High" : "Moderate",
+                        action: "Speech-Language Pathologist Evaluation",
+                        reason: "For comprehensive communication assessment and therapy planning",
+                        timeline: "Within 2-3 weeks"
+                    });
+                }
+
+                if (concern.area === "Sensory Aspects") {
+                    recommendations.push({
+                        priority: concern.priority === 'high' ? "High" : "Moderate",
+                        action: "Occupational Therapy Evaluation",
+                        reason: "For sensory processing assessment and intervention planning",
+                        timeline: "Within 3-4 weeks"
+                    });
+                }
+
+                if (concern.area === "Behaviour Patterns" && concern.priority === 'high') {
+                    recommendations.push({
+                        priority: "High",
+                        action: "Behavioral Analyst (BCBA) Consultation",
+                        reason: "For functional behavior assessment and intervention planning",
+                        timeline: "Within 1-2 weeks"
+                    });
+                }
+            });
+
+            return recommendations;
+        }
+
+        function getEducationalRecommendations(concerns, age) {
+            if (age < 3) {
+                return [{
+                    category: "Early Intervention Services",
+                    recommendations: [
+                        "Contact your state's Early Intervention program",
+                        "Request comprehensive developmental evaluation",
+                        "Explore available therapies and support services"
+                    ]
+                }];
+            }
+
+            const recommendations = [];
+
+            if (age >= 3) {
+                recommendations.push({
+                    category: "School-Based Services",
+                    recommendations: [
+                        "Request comprehensive school evaluation",
+                        "Discuss Individual Education Program (IEP) or 504 Plan",
+                        "Coordinate with school counselors and special education team",
+                        "Explore classroom accommodations and modifications"
+                    ]
+                });
+            }
+
+            if (concerns.some(c => c.area === "Social Relationship and Reciprocity")) {
+                recommendations.push({
+                    category: "Social Skills Support",
+                    recommendations: [
+                        "Request social skills groups at school",
+                        "Explore peer buddy programs",
+                        "Consider lunch bunch or structured recess activities",
+                        "Discuss social stories and visual supports"
+                    ]
+                });
+            }
+
+            if (concerns.some(c => c.area === "Speech-Language and Communication")) {
+                recommendations.push({
+                    category: "Communication Support",
+                    recommendations: [
+                        "Request speech-language services at school",
+                        "Explore assistive technology options",
+                        "Discuss communication goals in IEP",
+                        "Consider alternative communication methods"
+                    ]
+                });
+            }
+
+            return recommendations;
+        }
+
+        function getParentingStrategies(concerns, strengths, age) {
+            const strategies = [];
+
+            // Build on strengths
+            if (strengths.length > 0) {
+                strategies.push({
+                    category: "Building on Strengths",
+                    description: `Your child shows good development in ${strengths.map(s => s.area).join(', ')}`,
+                    strategies: [
+                        "Use your child's strengths to support challenging areas",
+                        "Celebrate and acknowledge their abilities regularly",
+                        "Create opportunities for your child to shine in their strong areas",
+                        "Use strengths as motivation for working on challenges"
+                    ]
+                });
+            }
+
+            // Address concerns with specific strategies
+            concerns.forEach(concern => {
+                if (concern.area === "Social Relationship and Reciprocity") {
+                    strategies.push({
+                        category: "Supporting Social Development",
+                        description: "Strategies to help with social interaction challenges",
+                        strategies: [
+                            "Practice social skills through role-playing at home",
+                            "Create structured opportunities for peer interaction",
+                            "Use social stories to explain social situations",
+                            "Model appropriate social responses",
+                            "Start with one-on-one interactions before group activities"
+                        ]
+                    });
+                }
+
+                if (concern.area === "Behaviour Patterns") {
+                    strategies.push({
+                        category: "Managing Challenging Behaviors",
+                        description: "Approaches to support behavioral regulation",
+                        strategies: [
+                            "Maintain consistent daily routines and schedules",
+                            "Use visual schedules and supports",
+                            "Identify triggers for challenging behaviors",
+                            "Implement positive reinforcement systems",
+                            "Teach alternative coping strategies",
+                            "Create calm-down spaces and strategies"
+                        ]
+                    });
+                }
+
+                if (concern.area === "Sensory Aspects") {
+                    strategies.push({
+                        category: "Sensory Support Strategies",
+                        description: "Ways to help with sensory processing challenges",
+                        strategies: [
+                            "Identify your child's sensory preferences and sensitivities",
+                            "Create sensory-friendly environments at home",
+                            "Use sensory tools and fidgets appropriately",
+                            "Plan for sensory breaks during activities",
+                            "Gradually introduce new sensory experiences",
+                            "Work with occupational therapist for sensory diet"
+                        ]
+                    });
+                }
+            });
+
+            // General parenting strategies
+            strategies.push({
+                category: "General Support Strategies",
+                description: "Overall approaches to support your child's development",
+                strategies: [
+                    "Maintain open communication with your child's support team",
+                    "Document your child's progress and challenges",
+                    "Connect with other families and support groups",
+                    "Take care of your own mental health and well-being",
+                    "Advocate for your child's needs in all settings",
+                    "Celebrate small victories and progress"
+                ]
+            });
+
+            return strategies;
+        }
+
+        function calculateResults() {
+            const childAge = document.getElementById('childAge').value;
+            const childName = document.getElementById('childName').value;
+            
+            if (!childAge) {
+                alert('Please enter your child\'s age before proceeding.');
+                return;
+            }
+
+            const totalQuestions = domains.reduce((sum, domain) => sum + domain.questions.length, 0);
+            const answeredQuestions = Object.values(responses).reduce((sum, domain) => sum + Object.keys(domain).length, 0);
+
+            if (answeredQuestions < totalQuestions) {
+                if (!confirm(`You have answered ${answeredQuestions} out of ${totalQuestions} questions. Would you like to proceed with partial results?`)) {
+                    return;
+                }
+            }
+
+            let totalScore = 0;
+            const domainScores = [];
+
+            domains.forEach((domain, domainIndex) => {
+                let domainScore = 0;
+                let domainQuestions = 0;
+                
+                if (responses[domainIndex]) {
+                    domainQuestions = Object.keys(responses[domainIndex]).length;
+                    domainScore = Object.values(responses[domainIndex]).reduce((sum, score) => sum + score, 0);
+                }
+                
+                domainScores.push({
+                    name: domain.title,
+                    score: domainScore,
+                    questionsAnswered: domainQuestions,
+                    totalQuestions: domain.questions.length,
+                    percentage: domainQuestions > 0 ? ((domainScore / (domainQuestions * 5)) * 100).toFixed(1) : 0
+                });
+                
+                totalScore += domainScore;
+            });
+
+            // Generate personalized analysis
+            const childProfile = analyzeChildProfile(domainScores, totalScore, parseInt(childAge), childName);
+
+            displayResults(totalScore, domainScores, childAge, childName, childProfile);
+        }
+
+        function displayResults(totalScore, domainScores, childAge, childName, childProfile) {
+            const resultsSection = document.getElementById('results');
+            let category = '';
+            let categoryColor = '';
+            let disabilityPercentage = 0;
+
+            if (totalScore < 70) {
+                category = 'Typical Development Pattern';
+                categoryColor = '#28a745';
+            } else if (totalScore <= 106) {
+                category = 'Mild Autism Characteristics';
+                categoryColor = '#ffc107';
+                disabilityPercentage = totalScore <= 88 ? 50 : 60;
+            } else if (totalScore <= 153) {
+                category = 'Moderate Autism Characteristics';
+                categoryColor = '#fd7e14';
+                disabilityPercentage = totalScore <= 123 ? 70 : 80;
+            } else {
+                category = 'Significant Autism Characteristics';
+                categoryColor = '#dc3545';
+                disabilityPercentage = totalScore <= 158 ? 90 : 100;
+            }
+
+            const displayName = childName || 'Your child';
+
+            resultsSection.innerHTML = `
+                <h2>📊 Personalized Assessment Results for ${displayName}</h2>
+                <div class="score-display">${totalScore}/200</div>
+                <div class="category" style="background-color: ${categoryColor}20; border: 2px solid ${categoryColor};">
+                    ${category}
+                    ${disabilityPercentage > 0 ? `<br><small>Estimated Impact Level: ${disabilityPercentage}%</small>` : ''}
+                </div>
+
+                <div class="domain-scores">
+                    ${domainScores.map(domain => `
+                        <div class="domain-score">
+                            <h4>${domain.name}</h4>
+                            <div style="font-size: 1.5em; font-weight: bold;">${domain.score}/${domain.totalQuestions * 5}</div>
+                            <small>${domain.questionsAnswered}/${domain.totalQuestions} questions</small>
+                            <br><small>Intensity: ${domain.percentage}%</small>
+                        </div>
+                    `).join('')}
+                </div>
+
+                <div class="recommendations">
+                    <!-- Age-Specific Guidance -->
+                    <div class="personalized-section">
+                        <h3>🎯 ${childProfile.ageSpecificGuidance.focus} (Age ${childAge})</h3>
+                        <p><strong>Current Priority:</strong> ${childProfile.ageSpecificGuidance.timeline}</p>
+                        <ul>
+                            ${childProfile.ageSpecificGuidance.priorities.map(priority => `<li>${priority}</li>`).join('')}
+                        </ul>
+                    </div>
+
+                    <!-- Strengths -->
+                    ${childProfile.strengths.length > 0 ? `
+                        <div class="strength-area">
+                            <h3>🌟 ${displayName}'s Strengths and Abilities</h3>
+                            ${childProfile.strengths.map(strength => `
+                                <div style="margin: 15px 0;">
+                                    <h4>${strength.area}</h4>
+                                    <p>${strength.description}</p>
+                                    <strong>Ways to build on this strength:</strong>
+                                    <ul>
+                                        ${strength.suggestions.map(suggestion => `<li>${suggestion}</li>`).join('')}
+                                    </ul>
+                                </div>
+                            `).join('')}
+                        </div>
+                    ` : ''}
+
+                    <!-- Areas of Concern -->
+                    ${childProfile.concerns.length > 0 ? `
+                        <div class="concern-area">
+                            <h3>🔍 Areas Requiring Attention and Support</h3>
+                            ${childProfile.concerns.map(concern => `
+                                <div style="margin: 15px 0;">
+                                    <h4>${concern.area} (${concern.priority} priority)</h4>
+                                    <p>${concern.description}</p>
+                                    <strong>Recommended interventions:</strong>
+                                    <ul>
+                                        ${concern.interventions.map(intervention => `<li>${intervention}</li>`).join('')}
+                                    </ul>
+                                </div>
+                            `).join('')}
+                        </div>
+                    ` : ''}
+
+                    <!-- Medical Recommendations -->
+                    <div class="medical-section">
+                        <h3>🏥 Professional Consultation Recommendations</h3>
+                        <p>Based on ${displayName}'s assessment results, the following professional consultations are recommended:</p>
+                        ${childProfile.medicalRecommendations.map(rec => `
+                            <div style="background: white; padding: 15px; margin: 10px 0; border-radius: 5px; border-left: 4px solid ${rec.priority === 'High' ? '#dc3545' : '#ffc107'};">
+                                <h4>${rec.action} (${rec.priority} Priority)</h4>
+                                <p><strong>Reason:</strong> ${rec.reason}</p>
+                                <p><strong>Recommended Timeline:</strong> ${rec.timeline}</p>
+                            </div>
+                        `).join('')}
+                        
+                        <div style="background: #e3f2fd; padding: 15px; border-radius: 5px; margin: 15px 0;">
+                            <h4>📋 Questions to Ask Healthcare Professionals</h4>
+                            <ul>
+                                <li>Based on these assessment results, do you recommend formal autism diagnostic testing?</li>
+                                <li>What specific therapeutic interventions would benefit ${displayName} most?</li>
+                                <li>How can we create the most supportive environment at home?</li>
+                                <li>What educational accommodations should we pursue?</li>
+                                <li>Are there any co-occurring conditions we should evaluate?</li>
+                                <li>What does the long-term outlook look like for ${displayName}?</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Educational Support -->
+                    <div class="personalized-section">
+                        <h3>🎓 Educational Support Recommendations</h3>
+                        ${childProfile.educationalRecommendations.map(category => `
+                            <div style="margin: 15px 0;">
+                                <h4>${category.category}</h4>
+                                <ul>
+                                    ${category.recommendations.map(rec => `<li>${rec}</li>`).join('')}
+                                </ul>
+                            </div>
+                        `).join('')}
+                    </div>
+
+                    <!-- Parenting Strategies -->
+                    <div class="personalized-section">
+                        <h3>👨‍👩‍👧‍👦 Personalized Parenting Strategies for ${displayName}</h3>
+                        ${childProfile.parentingStrategies.map(strategy => `
+                            <div style="margin: 20px 0; background: #f8f9fa; padding: 15px; border-radius: 5px;">
+                                <h4>${strategy.category}</h4>
+                                <p><em>${strategy.description}</em></p>
+                                <ul>
+                                    ${strategy.strategies.map(s => `<li>${s}</li>`).join('')}
+                                </ul>
+                            </div>
+                        `).join('')}
+                    </div>
+
+                    <!-- Important Reminders -->
+                    <div style="background: #fff3e0; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                        <h3>💡 Important Reminders for ${displayName}'s Journey</h3>
+                        <ul>
+                            <li><strong>Every child is unique:</strong> ${displayName} will develop at their own pace and in their own way</li>
+                            <li><strong>Early intervention matters:</strong> The sooner support is provided, the better the outcomes</li>
+                            <li><strong>This is a screening, not a diagnosis:</strong> Professional evaluation is needed for formal diagnosis</li>
+                            <li><strong>Your observations are valuable:</strong> You know ${displayName} best - trust your instincts</li>
+                            <li><strong>Support is available:</strong> You don't have to navigate this journey alone</li>
+                            <li><strong>Focus on progress, not perfection:</strong> Celebrate every small step forward</li>
+                            ${childProfile.strengths.length > 0 ? `<li><strong>Build on strengths:</strong> ${displayName}'s abilities in ${childProfile.strengths.map(s => s.area).join(' and ')} are valuable assets</li>` : ''}
+                        </ul>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 30px;">
+                    <button class="btn btn-primary" onclick="printResults()" style="margin: 10px;">
+                        🖨️ Save/Print Complete Report
+                    </button>
+                    <button class="btn btn-secondary" onclick="resetAssessment()" style="margin: 10px;">
+                        🔄 Take Assessment Again
+                    </button>
+                </div>
+            `;
+
+            document.getElementById('assessment-form').style.display = 'none';
+            resultsSection.style.display = 'block';
+
+            // Scroll to results
+            resultsSection.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function printResults() {
+            const childName = document.getElementById('childName').value || 'Child';
+            const childAge = document.getElementById('childAge').value;
+            const childGender = document.getElementById('childGender').value;
+
+            const printWindow = window.open('', '2560005@ritindia.edu');
+            printWindow.document.write(`
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>ISAA Assessment Results - ${childName}</title>
+                    <style>
+                        body {
+                            font-family: Arial, sans-serif;
+                            margin: 40px;
+                            line-height: 1.6;
+                            color: #333;
+                        }
+                        .header {
+                            text-align: center;
+                            border-bottom: 2px solid #819A91;
+                            padding-bottom: 20px;
+                            margin-bottom: 30px;
+                        }
+                        .section {
+                            margin-bottom: 25px;
+                            padding: 15px;
+                            border: 1px solid #ddd;
+                            border-radius: 8px;
+                        }
+                        .score-highlight {
+                            background: #f0f8ff;
+                            padding: 20px;
+                            text-align: center;
+                            font-size: 1.2em;
+                            font-weight: bold;
+                        }
+                        .domain-scores {
+                            display: grid;
+                            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                            gap: 15px;
+                            margin: 20px 0;
+                        }
+                        .domain-score {
+                            border: 1px solid #819A91;
+                            padding: 15px;
+                            text-align: center;
+                            border-radius: 5px;
+                        }
+                        .strength-area {
+                            background: #d4edda;
+                            border-left: 4px solid #28a745;
+                            padding: 15px;
+                            margin: 10px 0;
+                        }
+                        .concern-area {
+                            background: #f8d7da;
+                            border-left: 4px solid #dc3545;
+                            padding: 15px;
+                            margin: 10px 0;
+                        }
+                        .medical-section {
+                            background: #fff3e0;
+                            border: 1px solid #ff9800;
+                            padding: 20px;
+                            margin: 15px 0;
+                        }
+                        .personalized-section {
+                            background: #e3f2fd;
+                            border: 1px solid #2196f3;
+                            padding: 20px;
+                            margin: 15px 0;
+                        }
+                        ul {
+                            padding-left: 20px;
+                        }
+                        .disclaimer {
+                            background: #fff3cd;
+                            border: 1px solid #ffeaa7;
+                            padding: 15px;
+                            border-radius: 5px;
+                            margin-top: 20px;
+                        }
+                        @media print {
+                            .no-print {
+                                display: none;
+                            }
+                            body {
+                                margin: 20px;
+                            }
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div class="header">
+                        <h1>ISAA (Indian Scale for Assessment of Autism) Child Assessment Results</h1>
+                        <p><strong>Child:</strong> ${childName} | <strong>Age:</strong> ${childAge} years | <strong>Gender:</strong> ${childGender || 'Not specified'}</p>
+                        <p><strong>Date:</strong> ${new Date().toLocaleDateString()}</p>
+                        <p><strong>Time:</strong> ${new Date().toLocaleTimeString()}</p>
+                    </div>
+
+                    ${document.getElementById('results').innerHTML}
+
+                    <div class="disclaimer">
+                        <h3>📋 Important Medical Disclaimer</h3>
+                        <p><strong>This assessment is for screening purposes only and does not constitute a medical diagnosis.</strong></p>
+                        <ul>
+                            <li>Results should be discussed with qualified healthcare professionals</li>
+                            <li>Formal diagnosis requires comprehensive professional evaluation</li>
+                            <li>Early intervention services may be available regardless of formal diagnosis</li>
+                            <li>This report can be shared with healthcare providers and educators</li>
+                        </ul>
+                    </div>
+
+                    <div class="no-print" style="text-align: center; margin-top: 30px;">
+                        <button onclick="window.print()" style="padding: 10px 20px; font-size: 16px; background: #819A91; color: white; border: none; border-radius: 5px; cursor: pointer;">Print This Report</button>
+                        <button onclick="window.close()" style="padding: 10px 20px; font-size: 16px; margin-left: 10px; background: #6c757d; color: white; border: none; border-radius: 5px; cursor: pointer;">Close</button>
+                    </div>
+                </body>
+                </html>
+            `);
+            printWindow.document.close();
+        }
+
+        function resetAssessment() {
+            if (confirm('Are you sure you want to reset the assessment? All current responses will be lost.')) {
+                responses = {};
+                document.getElementById('childName').value = '';
+                document.getElementById('childAge').value = '';
+                document.getElementById('childGender').value = '';
+                document.getElementById('assessment-form').style.display = 'block';
+                document.getElementById('results').style.display = 'none';
+
+                // Clear all radio buttons
+                const radioButtons = document.querySelectorAll('input[type="radio"]');
+                radioButtons.forEach(radio => radio.checked = false);
+
+                // Reset domain list items
+                domains.forEach((domain, domainIndex) => {
+                    const domainItem = document.getElementById(`domain-item-${domainIndex}`);
+                    domainItem.innerHTML = `<span class="domain-icon">${domain.icon}</span> ${domain.title}`;
+                });
+
+                updateProgress();
+
+                // Scroll to top
+                document.querySelector('.main-content').scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // Auto-save functionality (stores in memory only)
+        function autoSave() {
+            const assessmentData = {
+                responses: responses,
+                childInfo: {
+                    name: document.getElementById('childName').value,
+                    age: document.getElementById('childAge').value,
+                    gender: document.getElementById('childGender').value
+                },
+                timestamp: new Date().toISOString()
+            };
+            // Store in memory only - no persistent storage
+            window.assessmentBackup = assessmentData;
+        }
+
+        // Load auto-saved data if available
+        function loadAutoSave() {
+            if (window.assessmentBackup) {
+                const data = window.assessmentBackup;
+                responses = data.responses || {};
+                
+                if (data.childInfo) {
+                    document.getElementById('childName').value = data.childInfo.name || '';
+                    document.getElementById('childAge').value = data.childInfo.age || '';
+                    document.getElementById('childGender').value = data.childInfo.gender || '';
+                }
+
+                // Restore radio button selections
+                Object.keys(responses).forEach(domainIndex => {
+                    Object.keys(responses[domainIndex]).forEach(questionIndex => {
+                        const value = responses[domainIndex][questionIndex];
+                        const radioButton = document.getElementById(`q${domainIndex}_${questionIndex}_${value}`);
+                        if (radioButton) {
+                            radioButton.checked = true;
+                        }
+                    });
+                });
+
+                updateProgress();
+            }
+        }
+
+        // Add event listeners for auto-save
+        function addAutoSaveListeners() {
+            const inputs = document.querySelectorAll('input[type="radio"], input[type="text"], input[type="number"], select');
+            inputs.forEach(input => {
+                input.addEventListener('change', autoSave);
+            });
+        }
+
+        // Show helpful tips
+        function showTips() {
+            const tips = [
+                "💡 Take your time - there's no rush to complete this assessment.",
+                "🤔 Think about your child's behavior over the past few months, not just today.",
+                "📝 Be honest in your responses - this tool is here to help, not judge.",
+                "🔄 You can change your answers anytime before calculating results.",
+                "📱 Your responses are not stored anywhere - complete privacy guaranteed.",
+                "👨‍👩‍👧‍👦 Consider asking your partner or other caregivers for their input too.",
+                "🎯 Focus on typical behaviors, not occasional incidents.",
+                "📊 Remember: this is a screening tool, not a diagnosis."
+            ];
+
+            const randomTip = tips[Math.floor(Math.random() * tips.length)];
+
+            // Create and show tip
+            const tipDiv = document.createElement('div');
+            tipDiv.className = 'notification';
+            tipDiv.innerHTML = `
+                <div>${randomTip}</div>
+                <button class="notification-close" onclick="this.parentElement.remove()">×</button>
+            `;
+            document.body.appendChild(tipDiv);
+
+            // Auto-remove after 8 seconds
+            setTimeout(() => {
+                if (tipDiv.parentElement) {
+                    tipDiv.remove();
+                }
+            }, 8000);
+        }
+
+        // Initialize the assessment when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeAssessment();
+            addAutoSaveListeners();
+            loadAutoSave();
+
+            // Show initial tip after a few seconds
+            setTimeout(showTips, 3000);
+
+            // Show tips periodically
+            setInterval(showTips, 120000); // Every 2 minutes
+        });
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && e.key === 's') {
+                e.preventDefault();
+                autoSave();
+                
+                // Show save confirmation
+                const saveNotif = document.createElement('div');
+                saveNotif.className = 'notification';
+                saveNotif.innerHTML = `
+                    <div>💾 Progress saved!</div>
+                    <button class="notification-close" onclick="this.parentElement.remove()">×</button>
+                `;
+                document.body.appendChild(saveNotif);
+                
+                setTimeout(() => {
+                    if (saveNotif.parentElement) {
+                        saveNotif.remove();
+                    }
+                }, 2000);
+            }
+        });
+
+        // Add warning before page unload if assessment is in progress
+        window.addEventListener('beforeunload', function(e) {
+            const answeredQuestions = Object.values(responses).reduce((sum, domain) => sum + Object.keys(domain).length, 0);
+            if (answeredQuestions > 0) {
+                e.preventDefault();
+                e.returnValue = '';
+                return '';
+            }
+        });
+    </script>
+</body>
+</html>
