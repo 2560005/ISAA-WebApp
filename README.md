@@ -18,4 +18,4 @@ A web-based implementation of the Indian Scale for Assessment of Autism (ISAA) t
 ## Important Note
 This tool provides screening only, not a diagnosis. Always consult healthcare professionals for proper evaluation.
 
-**Live Demo:** [GitHub Pages URL](https://2560005.github.io/ISAA-WebApp/)]
+**Live Demo:** [GitHub Pages URL](https://2560005.github.io/ISAA-WebApp/)
